@@ -4,9 +4,14 @@ from sqlalchemy.orm import sessionmaker
 
 class DAO:
 
+   name = "root"
+   password = "root"
+   host = "localhost"
+   database = "mydb"
+
    def __init__(self, tab):
        # Ligação com o esquema de banco de dados
-       engine = create_engine("mysql+mysqlconnector://root:uniceub@localhost/bdbs?charset=utf8mb4") # arrumar com um endereço novo
+       engine = create_engine("mysql+mysqlconnector://" + self.name + ":" + self.password + "@" + self.host + "/" + self.database + "?charset=utf8mb4") # arrumar com um endereço novo
 
        # Mapeamento Objeto Relacional com o SQLAlchemy
        db = automap_base()
