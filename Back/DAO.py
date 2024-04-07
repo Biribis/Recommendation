@@ -17,6 +17,8 @@ class DAO:
        db = automap_base()
        db.prepare(autoload_with=engine)
        self.tb_usuario = db.classes.tb_usuario
+       self.tb_jogos = db.classes.tb_jogos
+       self.tb_usuario_jogos = db.classes.tb_usuario_jogos
 
        self.id = "id_" + tab[3:len(tab)]
 
