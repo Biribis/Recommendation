@@ -4,10 +4,10 @@ from sqlalchemy.orm import sessionmaker
 
 class DAO:
 
-   name = "root"
-   password = "root"
+   name = "Rec"
+   password = "quemleumecomeu"
    host = "localhost"
-   database = "mydb"
+   database = "Recommendation"
 
    def __init__(self, tab):
        # Ligação com o esquema de banco de dados

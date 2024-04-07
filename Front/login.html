@@ -11,7 +11,7 @@
 <body>
     <div class="Logo">
         <h1>Recommendation</h1>
-        <a href="index">Início</a>
+        <a href="{{ url_for('index') }}">Voltar ao início</a>
     </div>
     <div class="wrapper">
         <form action="">
@@ -28,7 +28,7 @@
             <button type="submit" class="btn">Login</button>
 
             <div class="register-link">
-                <p>Não tem uma conta? <a href="#">Cadastre-se</a></p>
+                <p>Não tem uma conta? <a href="{{ url_for('cadastro') }}">Cadastre-se</a></p>
             </div>
         </form>
     </div>
