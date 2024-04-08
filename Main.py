@@ -51,20 +51,28 @@ def index():
 
 
 # Inserir novo usuário (cadastro de login)
-@app.route('/cadastro', methods=['PUT'])
-def inserir():
+
+@app.route('/render_cadastro')
+def render_cadastro():
+    return render_template('cadastro.html')
+
+@app.route('/cadastro', methods=['GET'])
+def cadastro():
    daoUsr = DAO('tb_usuario')
    objUsr = daoUsr.tb_usuario()
    objUsr.nome_usuario = request.args.get('nome_usuario')
    objUsr.email_usuario = request.args.get('email_usuario')
    objUsr.senha_usuario = request.args.get('senha_usuario')
-
+   objUsr.idade_usuario = request.args.get('idade_usuario')
    daoUsr.create(objUsr)
 
    return jsonify({
        'id_usuario': objUsr.id_usuario,
    })
 
+@app.route('/render_login')
+def render_login():
+    return render_template('login.html')
 
 # Login do usuário
 @app.route('/login', methods=['GET'])

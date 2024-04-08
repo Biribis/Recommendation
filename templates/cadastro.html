@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cadastro.css">
+    <link rel="stylesheet" href="../static/cadastro.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Cadastro</title>
 </head>
@@ -36,7 +36,7 @@
             <button type="submit" class="btn">Cadastrar</button>
 
             <div class="register-link">
-                <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça o login</a></p>
+                <p>Já tem uma conta? <a href="{{ url_for('render_login') }}">Faça o login</a></p>
             </div>
         </form>
     </div>
