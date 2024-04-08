@@ -14,22 +14,22 @@
         <a href="{{ url_for('index') }}">Voltar ao início</a>
     </div>
     <div class="wrapper">
-        <form action="">
+        <form action="{{ url_for('cadastro') }}">
             <h1>Cadastro</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <input type="text" id="name" name="name" placeholder="Username" required>
                 <i class='bx bxs-user-pin'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
                 <i class='bx bxs-lock-alt' ></i>
             </div>
             <div class="input-box">
-                <input type="email" placeholder="Email" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
                 <i class='bx bxs-lock-alt' ></i>
             </div>
             <div class="input-box">
-                <input type="date" placeholder="Idade" required>
+                <input type="date" id="idade" name="idade" placeholder="Idade" required>
                 <i class='bx bxs-lock-alt' ></i>
             </div>
 

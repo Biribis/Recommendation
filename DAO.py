@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 class DAO:
 
-   name = "Rec"
+   name = "root"
    password = "quemleumecomeu"
    host = "localhost"
    database = "Recommendation"
@@ -20,6 +20,7 @@ class DAO:
        self.tb_jogos = db.classes.tb_jogos
        self.tb_usuario_jogos = db.classes.tb_usuario_jogos
 
+       self.tabela = eval("db.classes." + tab)
        self.id = "id_" + tab[3:len(tab)]
 
        # Trabalho com sessões da base Objeto-Relacional
