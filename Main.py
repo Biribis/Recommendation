@@ -88,8 +88,8 @@ def render_login():
 # Login do usuário
 @app.route('/login', methods=['GET'])
 def login():
-    usuario = request.args.get('usuario')
-    senha = request.args.get('senha')
+    usuario = request.args.get('name')
+    senha = request.args.get('password')
     print(usuario, senha)
     dao = DAO('tb_usuario')
     lista = dao.readBy('nome_usuario', '==', usuario)
