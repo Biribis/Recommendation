@@ -58,6 +58,10 @@ class DAO:
        lst = self.ses.query(getattr(self.tabela, campo)).order_by(desc(getattr(self.tabela, campo))).first()[0]
        return lst
 
+   def deletelastid(self, campo, ultimo):
+       self.ses.query(self.tabela).filter(getattr(self.tabela, campo) == ultimo).delete()
+       self.ses.commit()
+
    def update(self):
        self.ses.commit()
 

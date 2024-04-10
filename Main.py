@@ -55,13 +55,11 @@ def index():
 
 @app.route('/2')
 def index2():
-    
-    
-    
+    daoUsr = DAO('tb_usuario')
+    id = daoUsr.selectid('id_usuario')
+    daoUsr.deletelastid('id_usuario', id)
+
     return render_template('index.html')
-
-
-# Inserir novo usuário (cadastro de login)
 
 @app.route('/render_cadastro')
 def render_cadastro():
