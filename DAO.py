@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import sessionmaker
 
@@ -19,6 +19,7 @@ class DAO:
        self.tb_usuario = db.classes.tb_usuario
        self.tb_jogos = db.classes.tb_jogos
        self.tb_usuario_jogos = db.classes.tb_usuario_jogos
+       self.tb_genero = db.classes.tb_genero
 
        self.tabela = eval("db.classes." + tab)
        self.id = "id_" + tab[3:len(tab)]
@@ -52,6 +53,10 @@ class DAO:
 
        lista = self.ses.query(self.tabela).filter(eval(exp)).all()
        return lista
+
+   def selectid(self, campo):
+       lst = self.ses.query(getattr(self.tabela, campo)).order_by(desc(getattr(self.tabela, campo))).first()[0]
+       return lst
 
    def update(self):
        self.ses.commit()

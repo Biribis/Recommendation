@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/cadastro2.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <div class="Logo">
+        <h1>Recommendation</h1>
+        <a href="{{ url_for('index2') }}">Voltar ao início</a>
+    </div>
+    <div class="wrapper">
+        <form action="{{ url_for('cadastro2') }}">
+            <h1>Escolha gêneros para começar</h1>
+            <div class="input-box">
+                <label for="genero">Primeiro:</label>
+                <select name="genero" id="genero">
+                    <option value="FPS">FPS</option>
+                    <option value="Sports">Sports</option>
+                    <option value="MOBA">MOBA</option>
+                    <option value="RPG">RPG</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="genero2">Segundo<br>(pode repetir):</label>
+                <select name="genero2" id="genero2">
+                    <option value="FPS">FPS</option>
+                    <option value="Sports">Sports</option>
+                    <option value="MOBA">MOBA</option>
+                    <option value="RPG">RPG</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>

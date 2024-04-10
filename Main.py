@@ -53,6 +53,14 @@ def load_user(user_id):
 def index():
     return render_template('index.html')
 
+@app.route('/2')
+def index2():
+    
+    
+    
+    return render_template('index.html')
+
+
 # Inserir novo usuário (cadastro de login)
 
 @app.route('/render_cadastro')
@@ -66,7 +74,6 @@ def cadastro():
     objUsr.nome_usuario = request.args.get('name')
     objUsr.email_usuario = request.args.get('email')
     objUsr.senha_usuario = request.args.get('password')
-    #objUsr.idade_usuario = request.args.get('idade')
     data = request.args.get('idade')
     objUsr.idade_usuario = calculate_age(data)
 
@@ -76,10 +83,25 @@ def cadastro():
                         "reason": "User already exists"})
     else:
         daoUsr.create(objUsr)
-        return jsonify({
-            "status": 200,
-            "message": "Cadastro realizado com sucesso!"
-        })
+        return render_template("cadastro2.html")
+    
+@app.route('/cadastro2', methods=['GET'])
+def cadastro2():
+    daoGen = DAO('tb_genero')
+    daoUsr = DAO('tb_usuario')
+    id = daoUsr.selectid('id_usuario')
+
+    objGen = daoGen.tb_genero()
+    objGen2 = daoGen.tb_genero()
+    objGen.id_genero_usuario = id
+    objGen2.id_genero_usuario = id
+    objGen.nome_genero = request.args.get('genero')
+    objGen2.nome_genero = request.args.get('genero2')
+
+    daoGen.create(objGen)
+    daoGen.create(objGen2)
+
+    return render_template("index.html")
 
 @app.route('/render_login')
 def render_login():

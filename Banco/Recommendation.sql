@@ -8,6 +8,13 @@ CREATE TABLE tb_usuario(
     senha_usuario VARCHAR(50) NOT NULL,
     idade_usuario INT NOT NULL
     );
+    
+CREATE TABLE tb_genero(
+	id_genero INT AUTO_INCREMENT PRIMARY KEY,
+	id_genero_usuario INT NOT NULL,
+    nome_genero VARCHAR(50),
+    FOREIGN KEY (id_genero_usuario) REFERENCES tb_usuario(id_usuario)
+);
 
 CREATE TABLE tb_jogos(          
     id_jogos INT AUTO_INCREMENT PRIMARY KEY,
