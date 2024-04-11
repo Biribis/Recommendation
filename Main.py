@@ -44,6 +44,7 @@ def load_user(user_id):
         usr.id_usuario = str(lista[0].id_usuario)
         usr.username = lista[0].nome_usuario
         usr.email_usuario = lista[0].email_usuario
+        usr.idade_usuario = lista[0].idade_usuario
         return usr
     else:
         return None
@@ -127,13 +128,7 @@ def login():
 
         if current_user.is_authenticated:
             # Autentica o usuário novamente para que o método login_remembered() funcione corretamente
-            return jsonify({
-                'id_usuario': usr.id_usuario,
-                'nome_usuario': usr.nome_usuario,
-                'email_usuario': usr.email_usuario,
-                'senha_usuario': usr.senha_usuario,
-                'idade_usuario': usr.idade_usuario
-            })
+            return render_template('index.html')
     else:
         return jsonify({"status": 401,
                         "reason": "Erro de Login"})
@@ -142,12 +137,23 @@ def login():
 @app.route('/logout', methods=['GET'])
 def logout():
     logout_user()
-    return jsonify(**{'result': 200,
-                      'data': {'message': 'Logout feito com sucesso'}})
+    return render_template('login.html')
 
-# Tela "inicial" pós login
-# @app.route('/start')
-# @login_required
+@app.route('/perfil')
+@login_required
+def perfil():
+    dao = DAO('tb_genero')
+    id = current_user.id_usuario
+    lista = dao.readBy('id_genero_usuario', '==', id)
+    if len(lista) == 1:
+        genero = lista[2]
+        return render_template('perfil.html', genero = genero)
+    else:
+        registro = lista[0]
+        registro2 = lista[1]
+        genero = registro[2]
+        genero2 = registro2[2]
+        return render_template('perfil.html', genero = genero, genero2=genero2)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
