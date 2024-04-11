@@ -96,8 +96,11 @@ def cadastro2():
     objGen.nome_genero = request.args.get('genero')
     objGen2.nome_genero = request.args.get('genero2')
 
-    daoGen.create(objGen)
-    daoGen.create(objGen2)
+    if objGen.nome_genero == objGen2.nome_genero:
+        daoGen.create(objGen)
+    else:
+        daoGen.create(objGen)
+        daoGen.create(objGen2)
 
     return render_template("index.html")
 
