@@ -134,26 +134,29 @@ def login():
                         "reason": "Erro de Login"})
 
 # Tela de logout (?)
-@app.route('/logout', methods=['GET'])
-def logout():
-    logout_user()
-    return render_template('login.html')
+# @app.route('/logout', methods=['GET'])
+# def logout():
+#     logout_user()
+#     return render_template('login.html')
 
 @app.route('/perfil')
 @login_required
 def perfil():
     dao = DAO('tb_genero')
     id = current_user.id_usuario
+    nome = current_user.nome_usuario
     lista = dao.readBy('id_genero_usuario', '==', id)
     if len(lista) == 1:
-        genero = lista[2]
-        return render_template('perfil.html', genero = genero)
+        a = 0
+        genero = lista[0].nome_genero
+        return render_template('perfil.html', nome=nome, genero=genero, a=a)
     else:
+        a = 1
         registro = lista[0]
         registro2 = lista[1]
-        genero = registro[2]
-        genero2 = registro2[2]
-        return render_template('perfil.html', genero = genero, genero2=genero2)
+        genero = registro.nome_genero
+        genero2 = registro2.nome_genero
+        return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)

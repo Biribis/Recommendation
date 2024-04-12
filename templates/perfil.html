@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Currículo</title>
+    <link rel="stylesheet" href="../static/perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="Logo">
+            <h1>Recommendation</h1>
+            <a href="{{ url_for('index') }}">Voltar ao início</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="esquerda">
+            <div class="inform">
+                <img src="" alt="">
+                <h2>{{nome}}</h2>
+            </div>
+            <div class="genero">
+                {% if a == 1 %}
+                <p>{{genero}}</p>
+                <p>{{genero2}}</p>
+                {% endif %}
+                {% if a == 0 %}
+                <p>{{genero}}</p>
+                {% endif %}
+            </div>
+            <div class="amigos">
+                <h2>Amigos</h2>
+                <ul></ul>
+            </div>
+        </div>
+        <div class="direita">
+            <div class="banner">
+                <p>banner</p>
+                <img src="" alt="">
+            </div>
+            <div class="jogos">
+                <p>jogos</p>
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
