@@ -158,9 +158,20 @@ def perfil():
         genero2 = registro2.nome_genero
         return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a)
 
-# @app_route('/search')
-# def search:
-#
+@app.route('/search')
+def search():
+    digit = request.args.get('search', '')
+    dao = DAO('tb_jogos')
+    if digit == '':
+        a = 1
+        return render_template('index.html', a=a)
+    else:
+        a = 0
+        lista = dao.readBy('nome_jogos', 'ilike', digit)
+        if len(lista) == 0:
+            return render_template('index.html', digit=digit, a=a)
+        else:
+            return render_template('jogo-info.html', lista=lista, a=a)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)

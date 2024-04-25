@@ -6,29 +6,45 @@
     <title>Barra de Pesquisa</title>
     <link rel="stylesheet" href="../static/jogo-info.css">
 </head>
-<body> 
+<body>
+    <div class="Logo">
+        <h1>Recommendation</h1>
+        <a href="{{ url_for('index') }}">Voltar ao início</a>
+    </div>
+    {% for linha in lista %}
     <div class="card">
-        <div class="card-header">
-          <h2>Cartão com 4 Campos</h2>
+            <div class="card-header">
+              <h2>{{ linha.nome_jogos }}</h2>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <label for="genero">Gênero:</label>
+                <span id="genero">{{ linha.genero_jogos }}</span>
+              </div>
+              <div class="field">
+                <label for="plataforma">Plataforma:</label>
+                <span id="plataforma">{{ linha.plataforma_jogos }}</span>
+              </div>
+              <div class="field">
+                <label for="faixa">Faixa Etária:</label>
+                <span id="faixa">{{ linha.faixaetaria_jogos }}</span>
+              </div>
+            </div>
+    </div>
+    {% endfor %}
+<!--
+
+<div class="card">
+    <div class="card-body">
+        {% for item in linha %}
+        <div class="field">
+            <strong>{{ item }}:</strong>
+            <span>{{ item }}</span>
         </div>
-        <div class="card-body">
-          <div class="field">
-            <label for="campo1">Campo 1:</label>
-            <input type="text" id="campo1" name="campo1">
-          </div>
-          <div class="field">
-            <label for="campo2">Campo 2:</label>
-            <input type="text" id="campo2" name="campo2">
-          </div>
-          <div class="field">
-            <label for="campo3">Campo 3:</label>
-            <input type="text" id="campo3" name="campo3">
-          </div>
-          <div class="field">
-            <label for="campo4">Campo 4:</label>
-            <input type="text" id="campo4" name="campo4">
-          </div>
-        </div>
-      </div>
+        {% endfor %}
+    </div>
+</div>
+
+-->
 </body>
 </html>
