@@ -158,5 +158,9 @@ def perfil():
         genero2 = registro2.nome_genero
         return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a)
 
+# @app_route('/search')
+# def search:
+#
+
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
