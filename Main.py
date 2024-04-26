@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required, UserMixin
 from DAO import DAO
 from datetime import date
+from random import randint
 def calculate_age(born):
     ano = born[0] + born[1] + born[2] + born[3]
     mes = born[5] + born[6]
@@ -133,11 +134,11 @@ def login():
         return jsonify({"status": 401,
                         "reason": "Erro de Login"})
 
-# Tela de logout (?)
-# @app.route('/logout', methods=['GET'])
-# def logout():
-#     logout_user()
-#     return render_template('login.html')
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/render_login')
 
 @app.route('/perfil')
 @login_required
@@ -164,6 +165,17 @@ def add():
     daoJog = DAO('tb_jogos')
     daoUJ = DAO('tb_usuario_jogos')
 
+    game_name = request.form['gameName']
+
+    linha = daoJog.readBy('nome_jogos','==', game_name)
+
+    objUJ = daoUJ.tb_usuario_jogos()
+    objUJ.tempototal_usuario_jogos = randint(0, 1000)
+    objUJ.usuario_id_fk = current_user.id_usuario
+    objUJ.jogos_id_fk = linha[0].id_jogos
+    daoUJ.create(objUJ)
+
+    return render_template('perfil.html')
 
 @app.route('/search')
 def search():
@@ -181,7 +193,8 @@ def search():
             return render_template('jogo-info.html', lista=lista, a=a)
 
 @app.route('/game', methods=['POST'])
-def game():
+@login_required
+def games():
     game_name = request.form['gameName']
     dao = DAO('tb_jogos')
     linha = dao.readBy('nome_jogos','==', game_name)

@@ -6,14 +6,17 @@
     <title>Barra de Pesquisa</title>
     <link rel="stylesheet" href="../static/jogo-info.css">
     <script>
-        function sendDataToPython(buttonElement) {
-              var gameName = $(buttonElement).data('gameName');
-              $.ajax({
-                url: "/game",
-                type: "POST",
-                data: { gameName: gameName }
-              });
-            }
+        $(document).ready(function() {
+          $(document).on('click', '.game-name-button', function(e) {
+            e.preventDefault();
+            var gameName = $(this).data('gameName');
+            $.ajax({
+              url: "/game",
+              type: "POST",
+              data: { gameName: gameName }
+            });
+          });
+        });
     </script>
 </head>
 <body>
@@ -25,7 +28,7 @@
     <div class="card">
             <div class="card-header">
               <h2>{{ linha.nome_jogos }}</h2>
-              <button class="game-name-button" data-game-name="{{ linha.nome_jogos }}" onclick="sendDataToPython(this)">Ver jogo</button>
+              <button class="game-name-button" data-game-name="{{ linha.nome_jogos }}">Ver jogo</button>
             </div>
             <div class="card-body">
               <div class="field">
