@@ -16,9 +16,19 @@
     margin-bottom: 25vh;
 }
 
+.Logo a{
+  color: #fff;
+  text-decoration: none;
+}
+
+.Logo a:hover{
+  text-decoration: underline;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image:linear-gradient(to bottom, rgba(31, 31, 31, 0.85), rgba(31, 31, 31, 0.85)) 
+    ,url(../static/Default_Gray_based_wallpaper_3.jpg);
     margin: 0;
     padding: 0;
   }
