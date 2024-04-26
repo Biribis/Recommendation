@@ -158,6 +158,13 @@ def perfil():
         genero2 = registro2.nome_genero
         return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a)
 
+@app.route('/add')
+@login_required
+def add():
+    daoJog = DAO('tb_jogos')
+    daoUJ = DAO('tb_usuario_jogos')
+
+
 @app.route('/search')
 def search():
     digit = request.args.get('search', '')
@@ -172,6 +179,13 @@ def search():
             return render_template('index.html', digit=digit, a=a)
         else:
             return render_template('jogo-info.html', lista=lista, a=a)
+
+@app.route('/game', methods=['POST'])
+def game():
+    game_name = request.form['gameName']
+    dao = DAO('tb_jogos')
+    linha = dao.readBy('nome_jogos','==', game_name)
+    return render_template('jogo_solo.html', linha=linha)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)

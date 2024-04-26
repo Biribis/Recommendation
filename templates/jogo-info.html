@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barra de Pesquisa</title>
     <link rel="stylesheet" href="../static/jogo-info.css">
+    <script>
+        function sendDataToPython(buttonElement) {
+              var gameName = $(buttonElement).data('gameName');
+              $.ajax({
+                url: "/game",
+                type: "POST",
+                data: { gameName: gameName }
+              });
+            }
+    </script>
 </head>
 <body>
     <div class="Logo">
@@ -15,6 +25,7 @@
     <div class="card">
             <div class="card-header">
               <h2>{{ linha.nome_jogos }}</h2>
+              <button class="game-name-button" data-game-name="{{ linha.nome_jogos }}" onclick="sendDataToPython(this)">Ver jogo</button>
             </div>
             <div class="card-body">
               <div class="field">
@@ -32,19 +43,5 @@
             </div>
     </div>
     {% endfor %}
-<!--
-
-<div class="card">
-    <div class="card-body">
-        {% for item in linha %}
-        <div class="field">
-            <strong>{{ item }}:</strong>
-            <span>{{ item }}</span>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
--->
 </body>
 </html>

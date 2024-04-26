@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartão com 4 Campos</title>
+<link rel="stylesheet" href="../static/jogo_solo.css">
+</head>
+<body>
+    <div class="Logo">
+        <h1>Recommendation</h1>
+        <a href="{{ url_for('index') }}">Voltar ao início</a>
+    </div>
+
+    <div class="card">
+  <div class="card-header">
+    <h2>{{ linha.nome_jogos }}</h2>
+  </div>
+  <div class="card-body">
+    <div class="field">
+        <label for="genero">Gênero:</label>
+        <span id="genero">{{ linha.genero_jogos }}</span>
+    </div>
+    <div class="field">
+        <label for="plataforma">Plataforma:</label>
+        <span id="plataforma">{{ linha.plataforma_jogos }}</span>
+    </div>
+    <div class="field">
+        <label for="faixa">Faixa Etária:</label>
+        <span id="faixa">{{ linha.faixaetaria_jogos }}</span>
+    </div>
+    <div class="adicionar">
+        <span class="gme_perfil">Adicionar jogo ao perfil</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
