@@ -3,6 +3,7 @@ from flask_login import current_user, LoginManager, login_user, logout_user, log
 from DAO import DAO
 from datetime import date
 from random import randint
+from flask_mysqldb import MySQL
 def calculate_age(born):
     ano = born[0] + born[1] + born[2] + born[3]
     mes = born[5] + born[6]
@@ -12,6 +13,13 @@ def calculate_age(born):
 
 app = Flask(__name__)
 app.secret_key = 'ahampohissoaimsm'
+
+mysql = MySQL(app)
+app.config["MYSQL_HOST"] = "localhost"
+app.config["MYSQL_USER"] = "root"
+app.config["MYSQL_PASSWORD"] = "quemleumecomeu"
+app.config["MYSQL_DB"] = "Recommendation"
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -131,8 +139,7 @@ def login():
             # Autentica o usuário novamente para que o método login_remembered() funcione corretamente
             return render_template('index.html')
     else:
-        return jsonify({"status": 401,
-                        "reason": "Erro de Login"})
+        return render_template('login.html')
 
 @app.route('/logout')
 @login_required
@@ -157,7 +164,7 @@ def perfil():
         registro2 = lista[1]
         genero = registro.nome_genero
         genero2 = registro2.nome_genero
-        return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a)
+        return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a, user=current_user)
 
 @app.route('/add')
 @login_required
@@ -175,30 +182,32 @@ def add():
     objUJ.jogos_id_fk = linha[0].id_jogos
     daoUJ.create(objUJ)
 
-    return render_template('perfil.html')
+    return render_template('perfil.html', user=current_user)
 
-@app.route('/search')
+@app.route('/search', methods=["POST","GET"])
 def search():
-    digit = request.args.get('search', '')
-    dao = DAO('tb_jogos')
-    if digit == '':
-        a = 1
-        return render_template('index.html', a=a)
-    else:
-        a = 0
-        lista = dao.readBy('nome_jogos', 'ilike', digit)
-        if len(lista) == 0:
-            return render_template('index.html', digit=digit, a=a)
-        else:
-            return render_template('jogo-info.html', lista=lista, a=a)
+    cursor = mysql.connection.cursor()
+    if request.method == 'POST':
+        searchbox = request.form['query']
+        print(searchbox)
+        if searchbox == " ":
+            query = "SELECT * from tb_jogos"
+            cursor.execute(query)
+            jogos = cursor.fetchall()
+        elif searchbox != " ":
+            query = f"SELECT * FROM tb_jogos WHERE nome_jogos LIKE '%{searchbox}%';"
+            cursor.execute(query)
+            jogos = cursor.fetchall()
+
+    return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
 
 @app.route('/game', methods=['POST'])
 @login_required
-def games():
-    game_name = request.form['gameName']
+def game():
+    game_name = request.form['id_jogo']
     dao = DAO('tb_jogos')
     linha = dao.readBy('nome_jogos','==', game_name)
-    return render_template('jogo_solo.html', linha=linha)
+    return render_template('jogo_solo.html', linha=linha, user=current_user)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)

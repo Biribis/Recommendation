@@ -1,41 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barra de Pesquisa</title>
-    <link rel="stylesheet" href="../static/jogo-info.css">
-    <script>
-        $(document).ready(function() {
-          $(document).on('click', '.game-name-button', function(e) {
-            e.preventDefault();
-            var gameName = $(this).data('gameName');
-            $.ajax({
-              url: "/game",
-              type: "POST",
-              data: { gameName: gameName }
-            });
-          });
-        });
-    </script>
-</head>
-<body>
-    <div class="Logo">
-        <h1>Recommendation</h1>
-        <a href="{{ url_for('index') }}">Voltar ao início</a>
-    </div>
-    {% for linha in lista %}
-    <div class="card">
-            <div class="card-header">
-              <h2>{{ linha.nome_jogos }}</h2>
-              <button class="game-name-button" data-game-name="{{ linha.nome_jogos }}">Ver jogo</button>
+
+    {% for linha in jogos %}
+     <form action="{{ url_for('game') }}" method="POST">
+    <div class="card" style="background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)">
+            <div class="card-header" style="background-color: #f90;
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px">
+                <h2 data-game-name="{{ linha.nome_jogos }}">{{ linha.nome_jogos }}</h2>
+                    <button class="singular" id="id_jogo" name="id_jogo" type="submit" value="{{ linha.id_jogos }}">Ver jogo</button>
             </div>
             <div class="card-body">
               <div class="field">
                 <label for="genero">Gênero:</label>
                 <span id="genero">{{ linha.genero_jogos }}</span>
               </div>
-              <div class="field">
+                <div class="field">
                 <label for="plataforma">Plataforma:</label>
                 <span id="plataforma">{{ linha.plataforma_jogos }}</span>
               </div>
@@ -45,6 +27,5 @@
               </div>
             </div>
     </div>
+     </form>
     {% endfor %}
-</body>
-</html>

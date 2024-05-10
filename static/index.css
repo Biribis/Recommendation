@@ -1,9 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+
+body {
+    font-family: Arial, sans-serif;
+    background-image:linear-gradient(to bottom, rgba(31, 31, 31, 0.85), rgba(31, 31, 31, 0.85)) 
+    ,url(../static/Default_Gray_based_wallpaper_3.jpg);
+    margin: 0;
+    padding: 0;
+  }
+.Logo{
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25vh;
+}
+
+.Logo a{
+  color: #fff;
+  text-decoration: none;
+}
+
+.Logo a:hover{
+  text-decoration: underline;
+}
+
 .search-form {
     display: flex;
     justify-content: center;
     margin-top: 50px;
 }
 
+a:link, a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+    background-color: red;
+  }
+
+/* CSS */
+.botao-pesquisar {
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.botao-pesquisar:hover,
+.botao-pesquisar:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.botao-pesquisar:active {
+  opacity: .5;
+}
 input[type="text"] {
     padding: 10px;
     font-size: 16px;
