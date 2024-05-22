@@ -204,10 +204,12 @@ def search():
 @app.route('/game', methods=['POST'])
 @login_required
 def game():
-    game_name = request.form['id_jogo']
+    game_id = request.form['id_jogo']
+    print(game_id)
     dao = DAO('tb_jogos')
-    linha = dao.readBy('nome_jogos','==', game_name)
-    return render_template('jogo_solo.html', linha=linha, user=current_user)
+    linha = dao.readBy('id_jogos','==', game_id)
+    print(linha[0].id_jogos)
+    return render_template('jogo_solo.html', linha=linha[0], user=current_user)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
