@@ -166,20 +166,21 @@ def perfil():
         genero2 = registro2.nome_genero
         return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a, user=current_user)
 
-@app.route('/add')
+@app.route('/add', methods=["POST"])
 @login_required
 def add():
     daoJog = DAO('tb_jogos')
     daoUJ = DAO('tb_usuario_jogos')
 
-    game_name = request.form['gameName']
+    game_id = request.form['game_id']
 
-    linha = daoJog.readBy('nome_jogos','==', game_name)
+    linha = daoJog.readBy('id_jogos','==', game_id)
 
     objUJ = daoUJ.tb_usuario_jogos()
     objUJ.tempototal_usuario_jogos = randint(0, 1000)
     objUJ.usuario_id_fk = current_user.id_usuario
     objUJ.jogos_id_fk = linha[0].id_jogos
+    objUJ.favorito = 0
     daoUJ.create(objUJ)
 
     return render_template('perfil.html', user=current_user)
