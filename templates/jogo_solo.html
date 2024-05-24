@@ -42,6 +42,21 @@
         <button class="game_perfil" id="id_game" name="id_game" type="submit" value="{{ linha.id_jogos }}">Adicionar aos Favoritos</button>
     </div>
     </form>
+      <form action="{{ url_for('avalia') }}" method="POST">
+    <div class="avaliar">
+        <div class="input-box">
+            <label for="avalia">Nota:</label>
+                <select name="avalia" id="avalia">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        <button type="submit" id="idJ" name="idJ" value="{{ linha.id_jogos }}" class="btn">Avaliar</button>
+    </div>
+    </form>
       {% endif %}
   </div>
 </div>

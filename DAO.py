@@ -71,6 +71,11 @@ class DAO:
        lst.favorito = valor
        self.ses.commit()
 
+   def altAvalia(self, id_usuario, id_jogo, valor):
+       lst = self.ses.query(self.tabela).filter_by(jogos_id_fk=id_jogo, usuario_id_fk=id_usuario).first()
+       lst.avalia = valor
+       self.ses.commit()
+
    def update(self):
        self.ses.commit()
 

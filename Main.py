@@ -151,20 +151,36 @@ def logout():
 @login_required
 def perfil():
     dao = DAO('tb_genero')
-    id = current_user.id_usuario
-    nome = current_user.nome_usuario
-    lista = dao.readBy('id_genero_usuario', '==', id)
+    lista = dao.readBy('id_genero_usuario', '==', current_user.id_usuario)
+    daoUJ = DAO('tb_usuario_jogos')
+    lista_jogos = daoUJ.readBy('usuario_id_fk', '==', current_user.id_usuario)
+    daoJog = DAO('tb_jogos')
+    lista_fav = []
+    temp_jog = []
+    temp_fav = []
+    for i in lista_jogos:
+        tab_jog = daoJog.readById(i.jogos_id_fk)
+        if i.favorito == 1:
+            lista_fav.append(tab_jog)
+            temp_fav.append(i.tempototal_usuario_jogos)
+            lista_jogos.remove(i)
+        else:
+            lista_jogos.append(tab_jog)
+            temp_jog.append(i.tempototal_usuario_jogos)
+            lista_jogos.remove(i)
+
+    favoritos = zip(lista_fav, temp_fav)
+    jogos = zip(lista_jogos, temp_jog)
+
     if len(lista) == 1:
-        a = 0
         genero = lista[0].nome_genero
-        return render_template('perfil.html', nome=nome, genero=genero, a=a)
+        return render_template('perfil.html', current_user=current_user, genero=genero, a=0, favoritos=favoritos, jogos=jogos)
     else:
-        a = 1
         registro = lista[0]
         registro2 = lista[1]
         genero = registro.nome_genero
         genero2 = registro2.nome_genero
-        return render_template('perfil.html', nome=nome, genero = genero, genero2=genero2, a=a, user=current_user)
+        return render_template('perfil.html', genero=genero, genero2=genero2, a=1, favoritos=favoritos, jogos=jogos, user=current_user)
 
 @app.route('/add', methods=["POST"])
 @login_required
@@ -181,9 +197,10 @@ def add():
     objUJ.usuario_id_fk = current_user.id_usuario
     objUJ.jogos_id_fk = linha[0].id_jogos
     objUJ.favorito = 0
+    objUJ.avalia = 0
     daoUJ.create(objUJ)
 
-    return render_template('perfil.html', user=current_user)
+    return render_template('jogo_solo.html', user=current_user, linha=linha[0], a=1)
 
 @app.route('/favourite', methods=["POST"])
 @login_required
@@ -192,24 +209,46 @@ def favourite():
     game_id = request.form['id_game']
     daoUJ.altFavourite(game_id, current_user.id_usuario, 1)
 
-    return render_template('perfil.html', user=current_user)
+    return render_template('perfil.html', user=current_user, a=2)
 
 @app.route('/search', methods=["POST","GET"])
 def search():
-    cursor = mysql.connection.cursor()
-    if request.method == 'POST':
-        searchbox = request.form['query']
-        print(searchbox)
-        if searchbox == " ":
-            query = "SELECT * from tb_jogos"
-            cursor.execute(query)
-            jogos = cursor.fetchall()
-        elif searchbox != " ":
-            query = f"SELECT * FROM tb_jogos WHERE nome_jogos LIKE '%{searchbox}%';"
-            cursor.execute(query)
-            jogos = cursor.fetchall()
+    if current_user.is_authenticated:
+        cursor = mysql.connection.cursor()
+        if request.method == 'POST':
+            searchbox = request.form['query']
+            print(searchbox)
+            if searchbox == " ":
+                query = "SELECT * from tb_jogos"
+                cursor.execute(query)
+                jogos = cursor.fetchall()
+            elif searchbox != " ":
+                query = f"SELECT * FROM tb_jogos WHERE nome_jogos LIKE '%{searchbox}%';"
+                cursor.execute(query)
+                jogos = cursor.fetchall()
+            daoUJ = DAO('tb_usuario_jogos')
+            ids = daoUJ.readBy('usuario_id_fk', '==', current_user.id_usuario)
+            for i in range(len(ids)):
+                ids.append(ids[i].jogos_id_fk)
+                ids.remove(ids[i])
+            jogos = [jogo for jogo in jogos if jogo['id_jogos'] not in ids]
+        return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
 
-    return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
+    else:
+        cursor = mysql.connection.cursor()
+        if request.method == 'POST':
+            searchbox = request.form['query']
+            print(searchbox)
+            if searchbox == " ":
+                query = "SELECT * from tb_jogos"
+                cursor.execute(query)
+                jogos = cursor.fetchall()
+            elif searchbox != " ":
+                query = f"SELECT * FROM tb_jogos WHERE nome_jogos LIKE '%{searchbox}%';"
+                cursor.execute(query)
+                jogos = cursor.fetchall()
+
+        return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
 
 @app.route('/game', methods=['POST'])
 @login_required
@@ -225,6 +264,14 @@ def game():
         return render_template('jogo_solo.html', linha=linha[0], user=current_user, a=1)
     else:
         return render_template('jogo_solo.html', linha=linha[0], user=current_user, a=0)
+
+@app.route('/avalia', methods=['POST'])
+@login_required
+def avalia():
+    avaliacao = request.form['avalia']
+    idJ = request.form['idJ']
+    dao = DAO('tb_usuario_jogos')
+    dao.altAvalia(idJ, current_user.id_usuario, int(avaliacao))
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)

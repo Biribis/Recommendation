@@ -24,7 +24,9 @@
 }
 
 body{
-    background-color: rgb(54, 54, 54);
+    font-family: Arial, sans-serif;
+    background-image:linear-gradient(to bottom, rgba(31, 31, 31, 0.85), rgba(31, 31, 31, 0.85)) 
+    ,url(../static/Default_Gray_based_wallpaper_3.jpg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,7 +39,10 @@ body{
     max-width: 1000px;
     min-height: 1000px;
     margin: 50px;
-    background-color: rgb(194, 110, 0);
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: rgb(194, 110, 0);
     display: grid;
     grid-template-columns: 1fr 2fr;
     box-shadow: 0 35px 35px rgba(0,0,0,0.2);
@@ -46,7 +51,7 @@ body{
 .container .esquerda{
     display: grid;
     grid-template-rows: 1fr 1fr 3fr;
-    background-color: rgb(255, 91, 91);
+    background-color: rgb(91, 255, 228);
     padding: 40px;
 }
 

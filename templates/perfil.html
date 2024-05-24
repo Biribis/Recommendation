@@ -18,7 +18,7 @@
         <div class="esquerda">
             <div class="inform">
                 <img src="" alt="">
-                <h2>{{nome}}</h2>
+                <h2>{{current_user.nome_usuario}}</h2>
             </div>
             <div class="genero">
                 {% if a == 1 %}
@@ -29,9 +29,31 @@
                 <p>{{genero}}</p>
                 {% endif %}
             </div>
-            <div class="amigos">
-                <h2>Amigos</h2>
-                <ul></ul>
+            <div class="jogados">
+                <h2>Outros Jogados</h2>
+                    {% for game, tempo in jogos %}
+                     <div class="card" style="background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)">
+            <div class="card-header" style="background-color: rgb(255, 91, 91);
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px">
+                <h2>{{ game.nome_jogos }}</h2>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <label for="generoJ">Gênero:</label>
+                <span id="generoJ">{{ game.genero_jogos }}</span>
+              </div>
+              <div class="field">
+                <label for="tempoJ">Tempo Jogado:</label>
+                <span id="tempoJ">{{ tempo }}</span>
+              </div>
+            </div>
+    </div>
+                    {% endfor %}
             </div>
         </div>
         <div class="direita">
@@ -39,9 +61,31 @@
                 <p>banner</p>
                 <img src="" alt="">
             </div>
-            <div class="jogos">
-                <p>jogos</p>
-                <ul></ul>
+            <div class="favoritos">
+                <p>Favoritos</p>
+                    {% for game, tempo in favoritos %}
+                     <div class="card" style="background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)">
+            <div class="card-header" style="background-color: rgb(255, 91, 91);
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px">
+                <h2>{{ game.nome_jogos }}</h2>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <label for="genero">Gênero:</label>
+                <span id="genero">{{ game.genero_jogos }}</span>
+              </div>
+              <div class="field">
+                <label for="tempo">Tempo Jogado:</label>
+                <span id="tempo">{{ tempo }}</span>
+              </div>
+            </div>
+    </div>
+                    {% endfor %}
             </div>
         </div>
     </div>
