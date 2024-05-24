@@ -29,11 +29,20 @@
         <label for="faixa">Faixa Etária:</label>
         <span id="faixa">{{ linha.faixaetaria_jogos }}</span>
     </div>
+      {% if a == 0 %}
     <form action="{{ url_for('add') }}" method="POST">
     <div class="adicionar">
         <button class="game_perfil" id="game_id" name="game_id" type="submit" value="{{ linha.id_jogos }}">Adicionar aos Jogados</button>
     </div>
     </form>
+      {% endif %}
+      {% if a == 1 %}
+    <form action="{{ url_for('favourite') }}" method="POST">
+    <div class="favoritar">
+        <button class="game_perfil" id="id_game" name="id_game" type="submit" value="{{ linha.id_jogos }}">Adicionar aos Favoritos</button>
+    </div>
+    </form>
+      {% endif %}
   </div>
 </div>
 </body>

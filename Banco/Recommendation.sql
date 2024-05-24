@@ -29,7 +29,7 @@ CREATE TABLE tb_usuario_jogos(
     tempototal_usuario_jogos INT NOT NULL,
     usuario_id_fk INT NOT NULL,
     jogos_id_fk INT NOT NULL,
-    favorito bool NOT NULL,
+    favorito BIT NOT NULL,
     FOREIGN KEY (usuario_id_fk) REFERENCES tb_usuario(id_usuario),
     FOREIGN KEY (jogos_id_fk) REFERENCES tb_jogos(id_jogos)
     );

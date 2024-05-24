@@ -185,6 +185,15 @@ def add():
 
     return render_template('perfil.html', user=current_user)
 
+@app.route('/favourite', methods=["POST"])
+@login_required
+def favourite():
+    daoUJ = DAO('tb_usuario_jogos')
+    game_id = request.form['id_game']
+    daoUJ.altFavourite(game_id, current_user.id_usuario, 1)
+
+    return render_template('perfil.html', user=current_user)
+
 @app.route('/search', methods=["POST","GET"])
 def search():
     cursor = mysql.connection.cursor()
@@ -207,10 +216,15 @@ def search():
 def game():
     game_id = request.form['id_jogo']
     print(game_id)
-    dao = DAO('tb_jogos')
-    linha = dao.readBy('id_jogos','==', game_id)
+    daoJog = DAO('tb_jogos')
+    linha = daoJog.readBy('id_jogos','==', game_id)
     print(linha[0].id_jogos)
-    return render_template('jogo_solo.html', linha=linha[0], user=current_user)
+    daoUJ = DAO('tb_usuario_jogos')
+    lista = daoUJ.selectUsuJog(linha[0].id_jogos, current_user.id_usuario)
+    if lista:
+        return render_template('jogo_solo.html', linha=linha[0], user=current_user, a=1)
+    else:
+        return render_template('jogo_solo.html', linha=linha[0], user=current_user, a=0)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)

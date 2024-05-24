@@ -62,6 +62,15 @@ class DAO:
        self.ses.query(self.tabela).filter(getattr(self.tabela, campo) == ultimo).delete()
        self.ses.commit()
 
+   def selectUsuJog(self, id_jogo, id_usuario):
+       lst = self.ses.query(self.tabela).filter_by(jogos_id_fk=id_jogo, usuario_id_fk=id_usuario).first()
+       return lst
+
+   def altFavourite(self, id_jogo, id_usuario, valor):
+       lst = self.ses.query(self.tabela).filter_by(jogos_id_fk=id_jogo, usuario_id_fk=id_usuario).first()
+       lst.favorito = valor
+       self.ses.commit()
+
    def update(self):
        self.ses.commit()
 
