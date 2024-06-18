@@ -197,7 +197,7 @@ def add():
     objUJ.usuario_id_fk = current_user.id_usuario
     objUJ.jogos_id_fk = linha[0].id_jogos
     objUJ.favorito = 0
-    objUJ.avalia = 0
+    objUJ.avaliacao_usuario_jogos = 1
     daoUJ.create(objUJ)
 
     return render_template('jogo_solo.html', user=current_user, linha=linha[0], a=1)
@@ -214,26 +214,46 @@ def favourite():
 @app.route('/search', methods=["POST","GET"])
 def search():
     if current_user.is_authenticated:
-        cursor = mysql.connection.cursor()
-        if request.method == 'POST':
-            searchbox = request.form['query']
-            print(searchbox)
-            if searchbox == " ":
-                query = "SELECT * from tb_jogos"
-                cursor.execute(query)
-                jogos = cursor.fetchall()
-            elif searchbox != " ":
-                query = f"SELECT * FROM tb_jogos WHERE nome_jogos LIKE '%{searchbox}%';"
-                cursor.execute(query)
-                jogos = cursor.fetchall()
-            daoUJ = DAO('tb_usuario_jogos')
-            ids = daoUJ.readBy('usuario_id_fk', '==', current_user.id_usuario)
-            for i in range(len(ids)):
-                ids.append(ids[i].jogos_id_fk)
-                ids.remove(ids[i])
-            jogos = [jogo for jogo in jogos if jogo['id_jogos'] not in ids]
-        return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
-
+        if current_user.idade_usuario >= 18:
+            cursor = mysql.connection.cursor()
+            if request.method == 'POST':
+                searchbox = request.form['query']
+                print(searchbox)
+                if searchbox == " ":
+                    query = "SELECT * from tb_jogos;"
+                    cursor.execute(query)
+                    jogos = cursor.fetchall()
+                elif searchbox != " ":
+                    query = f"SELECT * FROM tb_jogos WHERE nome_jogos LIKE '%{searchbox}%';"
+                    cursor.execute(query)
+                    jogos = cursor.fetchall()
+                daoUJ = DAO('tb_usuario_jogos')
+                ids = daoUJ.readBy('usuario_id_fk', '==', current_user.id_usuario)
+                for i in range(len(ids)):
+                    ids.append(ids[i].jogos_id_fk)
+                    ids.remove(ids[i])
+                jogos = [jogo for jogo in jogos if jogo['id_jogos'] not in ids]
+            return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
+        else:
+            cursor = mysql.connection.cursor()
+            if request.method == 'POST':
+                searchbox = request.form['query']
+                print(searchbox)
+                if searchbox == " ":
+                    query = "SELECT * from tb_jogos WHERE faixaetaria_jogos < 18;"
+                    cursor.execute(query)
+                    jogos = cursor.fetchall()
+                elif searchbox != " ":
+                    query = f"SELECT * FROM tb_jogos WHERE faixaetaria_jogos < 18 AND nome_jogos LIKE '%{searchbox}%';"
+                    cursor.execute(query)
+                    jogos = cursor.fetchall()
+                daoUJ = DAO('tb_usuario_jogos')
+                ids = daoUJ.readBy('usuario_id_fk', '==', current_user.id_usuario)
+                for i in range(len(ids)):
+                    ids.append(ids[i].jogos_id_fk)
+                    ids.remove(ids[i])
+                jogos = [jogo for jogo in jogos if jogo['id_jogos'] not in ids]
+            return jsonify({'htmlresponse': render_template('jogo-info.html', jogos=jogos)})
     else:
         cursor = mysql.connection.cursor()
         if request.method == 'POST':
@@ -270,8 +290,12 @@ def game():
 def avalia():
     avaliacao = request.form['avalia']
     idJ = request.form['idJ']
+    print(f'nota: {avaliacao}\nidJ: {idJ}')
     dao = DAO('tb_usuario_jogos')
-    dao.altAvalia(idJ, current_user.id_usuario, int(avaliacao))
+    daoJog = DAO('tb_jogos')
+    dao.altAvalia(current_user.id_usuario, idJ, int(avaliacao))
+    linha = daoJog.readBy('id_jogos', '==', idJ)
+    return render_template('jogo_solo.html', linha=linha[0], user=current_user, a=1)
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
