@@ -197,7 +197,7 @@ def add():
     objUJ.usuario_id_fk = current_user.id_usuario
     objUJ.jogos_id_fk = linha[0].id_jogos
     objUJ.favorito = 0
-    objUJ.avaliacao_usuario_jogos = 1
+    objUJ.avaliacao_usuario_jogos = 0
     daoUJ.create(objUJ)
 
     return render_template('jogo_solo.html', user=current_user, linha=linha[0], a=1)
