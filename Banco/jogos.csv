@@ -1,0 +1,29 @@
+id_jogos,nome_jogos,genero_jogos,plataforma_jogos,faixaetaria_jogos
+1,"Call of Duty: Warzone",FPS,Multi-plataforma,18
+2,"Counter-Strike: Global Offensive",FPS,PC,18
+3,Overwatch,FPS,Multi-plataforma,13
+4,"Rainbow Six Siege",FPS,Multi-plataforma,18
+5,"DOOM Eternal",FPS,Multi-plataforma,18
+6,"Battlefield V",FPS,Multi-plataforma,18
+7,"Halo Infinite",FPS,Multi-plataforma,18
+8,"FIFA 22",Sport,Multi-plataforma,0
+9,"NBA 2K22",Sport,Multi-plataforma,0
+10,"Madden NFL 22",Sport,Multi-plataforma,0
+11,"Pro Evolution Soccer 2023",Sport,Multi-plataforma,0
+12,"MLB The Show 22",Sport,Console,0
+13,"Rocket League",Sport,Multi-plataforma,0
+14,"Tony Hawks Pro Skater 1 + 2",Sport,Multi-plataforma,13
+15,"League of Legends",MOBA,PC,13
+16,"Dota 2",MOBA,PC,18
+17,Smite,MOBA,Multi-plataforma,13
+18,"Heroes of the Storm",MOBA,PC,13
+19,"Arena of Valor",MOBA,Multi-plataforma,10
+20,Vainglory,MOBA,Mobile,10
+21,"Mobile Legends: Bang Bang",MOBA,Mobile,13
+22,"The Witcher 3: Wild Hunt",RPG,Multi-plataforma,18
+23,"Final Fantasy XIV",RPG,Multi-plataforma,13
+24,"The Elder Scrolls V: Skyrim",RPG,Multi-plataforma,18
+25,"Divinity: Original Sin 2",RPG,Multi-plataforma,18
+26,"Dragon Age: Inquisition",RPG,Multi-plataforma,18
+27,"Persona 5",RPG,Console,13
+28,"Octopath Traveler",RPG,Console,13

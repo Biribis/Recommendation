@@ -4,6 +4,8 @@ from DAO import DAO
 from datetime import date
 from random import randint
 from flask_mysqldb import MySQL
+import csv
+from csv_handling import avaliar, recomendar
 def calculate_age(born):
     ano = born[0] + born[1] + born[2] + born[3]
     mes = born[5] + born[6]
@@ -80,6 +82,7 @@ def cadastro():
     daoUsr = DAO('tb_usuario')
     objUsr = daoUsr.tb_usuario()
     objUsr.nome_usuario = request.args.get('name')
+    nome = objUsr.nome_usuario
     objUsr.email_usuario = request.args.get('email')
     objUsr.senha_usuario = request.args.get('password')
     data = request.args.get('idade')
@@ -91,6 +94,15 @@ def cadastro():
                         "reason": "User already exists"})
     else:
         daoUsr.create(objUsr)
+        usuario_criado = daoUsr.readBy('nome_usuario', '==', nome)
+        daoJog = DAO('tb_jogos')
+        lista_jogos = daoJog.readAll()
+        arquivo_csv = "banco/usuario_jogos.csv"
+        with open(arquivo_csv, mode='a', newline='', encoding='utf-8') as arquivo:
+            escritor_csv = csv.writer(arquivo)
+            for i in range(len(lista_jogos)):
+                jogo_csv = [usuario_criado[0].id_usuario, lista_jogos[i].id_jogos, 0, 0]
+                escritor_csv.writerow(jogo_csv)
         return render_template("cadastro2.html")
     
 @app.route('/cadastro2', methods=['GET'])
@@ -295,7 +307,13 @@ def avalia():
     daoJog = DAO('tb_jogos')
     dao.altAvalia(current_user.id_usuario, idJ, int(avaliacao))
     linha = daoJog.readBy('id_jogos', '==', idJ)
+    avaliar(current_user.id_usuario, idJ, avaliacao)
     return render_template('jogo_solo.html', linha=linha[0], user=current_user, a=1)
+
+@app.route('/recomenda')
+@login_required
+def recomenda():
+    return 0
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
