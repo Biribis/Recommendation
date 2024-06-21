@@ -317,15 +317,25 @@ def recomenda():
     daoJ = DAO('tb_jogos')
     daoGen = DAO('tb_genero')
     pesquisa_generos = daoGen.readBy('id_genero_usuario', '==', current_user.id_usuario)
+    print(pesquisa_generos[0])
     if len(pesquisa_generos) == 1:
         lista_generos = [pesquisa_generos[0].nome_genero]
     else:
         lista_generos = [pesquisa_generos[0].nome_genero, pesquisa_generos[1].nome_generos]
+    print(lista_generos)
     lista_jogos = dao.readBy('usuario_id_fk', '==', current_user.id_usuario)
+    print(lista_jogos)
     maior_nota = 0
     for i in range(len(lista_jogos)):
         jogo = daoJ.readById(lista_jogos[i].jogos_id_fk)
-        if lista_jogos[i].avaliacao_usuario_jogos > maior_nota and jogo.genero_jogos in lista_generos:
+        print(jogo.nome_jogos)
+        print(lista_jogos[i].avaliacao_usuario_jogos)
+        print(jogo.genero_jogos)
+        print(lista_generos)
+        if lista_jogos[i].avaliacao_usuario_jogos > maior_nota and (jogo.genero_jogos in lista_generos):
+            maior_nota = lista_jogos[i].avaliacao_usuario_jogos
+            jogo_favorito = jogo.nome_jogos
+        elif lista_jogos[i].avaliacao_usuario_jogos > maior_nota+1:
             maior_nota = lista_jogos[i].avaliacao_usuario_jogos
             jogo_favorito = jogo.nome_jogos
 
