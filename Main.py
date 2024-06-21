@@ -313,7 +313,25 @@ def avalia():
 @app.route('/recomenda')
 @login_required
 def recomenda():
-    return 0
+    dao = DAO('tb_usuario_jogos')
+    daoJ = DAO('tb_jogos')
+    daoGen = DAO('tb_genero')
+    pesquisa_generos = daoGen.readBy('id_genero_usuario', '==', current_user.id_usuario)
+    if len(pesquisa_generos) == 1:
+        lista_generos = [pesquisa_generos[0].nome_genero]
+    else:
+        lista_generos = [pesquisa_generos[0].nome_genero, pesquisa_generos[1].nome_generos]
+    lista_jogos = dao.readBy('usuario_id_fk', '==', current_user.id_usuario)
+    maior_nota = 0
+    for i in range(len(lista_jogos)):
+        jogo = daoJ.readById(lista_jogos[i].jogos_id_fk)
+        if lista_jogos[i].avaliacao_usuario_jogos > maior_nota and jogo.genero_jogos in lista_generos:
+            maior_nota = lista_jogos[i].avaliacao_usuario_jogos
+            jogo_favorito = jogo.nome_jogos
+
+    nomes_recomedados = recomendar(jogo_favorito)
+
+    return (render_template('recomenda.html', user=current_user, jogos=nomes_recomedados))
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
