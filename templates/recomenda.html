@@ -6,12 +6,16 @@
     <link rel="stylesheet" href="../static/recomenda.css">
 </head>
 <body>
+<div class="Logo">
+        <h1>Recommendation</h1>
+        <a href="{{ url_for('index') }}">Voltar ao início</a>
+</div>
     <div>
         {% for linha in jogos %}
     <div class="card" style="background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)">
-            <div class="card-header" style="background-color: #f90;
+            <div class="card-header" style="background-color: rgb(0, 180, 171);
             color: #fff;
             padding: 10px;
             border-top-left-radius: 5px;
