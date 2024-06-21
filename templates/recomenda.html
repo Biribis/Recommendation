@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../static/recomenda.css">
 </head>
 <body>
-
+    <div>
+        {% for linha in jogos %}
+    <div class="card" style="background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)">
+            <div class="card-header" style="background-color: #f90;
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px">
+                <h2>{{ linha }}</h2>
+            </div>
+            <div class="card-body">
+<!--              <div class="field">-->
+<!--                <label for="genero">Gênero:</label>-->
+<!--                <span id="genero">{{ linha.genero_jogos }}</span>-->
+<!--              </div>-->
+<!--                <div class="field">-->
+<!--                <label for="plataforma">Plataforma:</label>-->
+<!--                <span id="plataforma">{{ linha.plataforma_jogos }}</span>-->
+<!--              </div>-->
+<!--              <div class="field">-->
+<!--                <label for="faixa">Faixa Etária:</label>-->
+<!--                <span id="faixa">{{ linha.faixaetaria_jogos }}</span>-->
+<!--              </div>-->
+            </div>
+    </div>
+    {% endfor %}
+    </div>
 </body>
 </html>

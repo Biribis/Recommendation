@@ -41,6 +41,7 @@
 </div>
 {% if current_user.is_authenticated %}
     <a href="{{ url_for('perfil') }}">Perfil</a>
+    <a href="{{ url_for('recomenda') }}">Recomendações</a>
     {% else %}
     <a href="{{ url_for('render_login') }}">Login</a>
 {% endif %}
